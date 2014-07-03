@@ -116,7 +116,7 @@ class cecard5 extends cecard {
       $this->r->mChan("A 7 was rolled, no damage is done.");
       return true;
     }
-    $this->r->mChan("$d10 was rolled. Dealing 3 damage to all players in Block {$player->location->block}.");
+    $this->r->mChan("$d10 was rolled. Dealing 3 damage to all players in Block {$target->location->block}.");
     foreach($target->location->players as $nick => $player) $player->damage(3, 'Dynamite');
     foreach($target->location->neighbour->players as $nick => $player) $player->damage(3, 'Dynamite');
     return true;

@@ -10,7 +10,7 @@ class phaseEnd {
   }
   function init() {
     if($this->r->currentPlayer->freeTurn) {
-      $this->r->mChan("$from: You have earned a free turn from the Concealed Knowledge.");
+      $this->r->mChan($this->r->currentPlayer->nick.": You have earned a free turn from the Concealed Knowledge.");
       $this->r->currentPlayer->freeTurn = false;
     } else {
       while(true) {

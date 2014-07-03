@@ -24,8 +24,9 @@ class phaseWerewolf {
       $this->damageTarget($d4);
     } else {
       $d6 = mt_rand(1, 6);
-      $dmg = abs($d6, $d4);
-      if($dmg == 0) {
+      $diff = $d6 - $d4;
+      $dmg = abs($diff);
+      if($dmg > 0) {
         $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
         $this->damageTarget($dmg);
       } else {

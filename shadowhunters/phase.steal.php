@@ -43,13 +43,13 @@ class phaseSteal {
     if(!($this->r->checkArgs($from, $args, 2))) return;
     $player = null;
     $equipment = null;
-    if($this->r->validTarget($args[0])) {
+    if(isset($this->r->currentPlayer->steal[$args[0]])) {
       if(isset($this->r->players[$args[0]]->equipment[$args[1]])) {
         $player = $this->r->players[$args[0]];
         $equipment = $args[1];
       }
     }
-    else if($this->r->validTarget($args[1])) {
+    else if(isset($this->r->currentPlayer->steal[$args[1]])) {
       if(isset($this->r->players[$args[1]]->equipment[$args[0]])) {
         $player = $this->r->players[$args[1]];
         $equipment = $args[0];

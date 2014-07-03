@@ -181,6 +181,11 @@ class shadowhunters implements pluginInterface {
     if(!(isset($this->players[$from]))) return;
     $this->players[$from]->reveal();
   }
+  function cmdwhoami($from, $args) {
+    if(!($this->started)) return;
+    if(!(isset($this->players[$from]))) return;
+    $this->nUser($from, "You are {$this->players[$from]->character->name} ({$this->players[$from]->character->team}).");
+  }
   function cmdchar($from, $args) {
     if(!(isset($this->players[$from]))) return;
     $this->players[$from]->character->action($from, $args);
