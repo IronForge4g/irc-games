@@ -82,7 +82,7 @@ class chcard3 extends chcard {
     return true;
   }
 }
-class hcard4 extends chcard {
+class chcard4 extends chcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Disenchant Mirror';

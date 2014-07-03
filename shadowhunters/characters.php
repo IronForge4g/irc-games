@@ -125,7 +125,7 @@ class hchar0 extends char {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     } 
-    if(!($this->r->currentPhase->locations != null) {
+    if(!($this->r->currentPhase->locations != null)) {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     }
@@ -195,7 +195,7 @@ class hchar1 extends char {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     } 
-    if(!($this->r->currentPhase->locations != null) {
+    if(!($this->r->currentPhase->locations != null)) {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     }
@@ -240,7 +240,7 @@ class hchar2 extends char {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     } 
-    if(!($this->r->currentPhase->locations != null) {
+    if(!($this->r->currentPhase->locations != null)) {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     }
@@ -267,7 +267,7 @@ class schar0 extends char {
     $ndead = 0;
     foreach($this->r->players as $nick => $player) {
       if($player->character->team == 'Hunter' && $player->alive) $halive++;
-      if($player->character->team == 'Neutral' && !($player->alive) $ndead++;
+      if($player->character->team == 'Neutral' && !($player->alive)) $ndead++;
     }
     if($ndead >= 3) return true;
     if($halive == 0) return true;
@@ -294,7 +294,7 @@ class schar1 extends char {
     $ndead = 0;
     foreach($this->r->players as $nick => $player) {
       if($player->character->team == 'Hunter' && $player->alive) $halive++;
-      if($player->character->team == 'Neutral' && !($player->alive) $ndead++;
+      if($player->character->team == 'Neutral' && !($player->alive)) $ndead++;
     }
     if($ndead >= 3) return true;
     if($halive == 0) return true;
@@ -326,7 +326,7 @@ class schar2 extends char {
     $ndead = 0;
     foreach($this->r->players as $nick => $player) {
       if($player->character->team == 'Hunter' && $player->alive) $halive++;
-      if($player->character->team == 'Neutral' && !($player->alive) $ndead++;
+      if($player->character->team == 'Neutral' && !($player->alive)) $ndead++;
     }
     if($ndead >= 3) return true;
     if($halive == 0) return true;

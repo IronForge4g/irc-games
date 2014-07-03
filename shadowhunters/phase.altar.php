@@ -34,7 +34,7 @@ class phaseAltar {
         $equipment = $args[1];
       }
     }
-    else if($this->r->validTarget($args[1]])) {
+    else if($this->r->validTarget($args[1])) {
       if(isset($this->r->players[$args[1]]->equipment[$args[0]])) {
         $player = $this->r->players[$args[1]];
         $equipment = $args[1];

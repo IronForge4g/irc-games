@@ -5,7 +5,7 @@ class phaseSetup {
 
   function __construct($root) {
     $this->p = $root;
-    $this->desc = 'Setting up Game'
+    $this->desc = 'Setting up Game';
   }
   function init() {
     $this->setupPlayers();

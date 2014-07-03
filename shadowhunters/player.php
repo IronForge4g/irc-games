@@ -66,7 +66,7 @@ class player {
       }
     }
     if($reason == 'attack') {
-      if($this->hasEquipment('Holy Robe') $amount--;
+      if($this->hasEquipment('Holy Robe')) $amount--;
     }
     if($amount < 0) $amount = 0;
     $this->r->mChan($this->nick." takes $amount damage.");

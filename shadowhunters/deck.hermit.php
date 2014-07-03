@@ -31,9 +31,9 @@ class hcard1 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);
@@ -54,9 +54,9 @@ class hcard2 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);
@@ -77,9 +77,9 @@ class hcard3 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);
@@ -100,9 +100,9 @@ class hcard4 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);
@@ -147,9 +147,9 @@ class hcard7 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);
@@ -170,9 +170,9 @@ class hcard8 extends hcard {
     $this->type = 'Hermit';
   }
   function action($target, $args) {
-    if(count($args) == 1)) {
+    if(count($args) == 1) {
       $e = strtoupper($args[0]);
-      if(isset($target->equipment[$e]) {
+      if(isset($target->equipment[$e])) {
         $this->r->mChan($target->nick." gives their ".$target->equipment[$e]->name." to {$this->r->currentPlayer->nick}.");
         $this->r->currentPlayer->equipment[] = $target->equipment[$e];
         unset($target->equipment[$e]);

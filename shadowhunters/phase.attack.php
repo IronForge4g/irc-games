@@ -31,11 +31,11 @@ class phaseAttack {
     }
   }
   function cmdattack($from, $args) {
-    if(!($this->r->checkCurrentPlayer($from, 'attack');
+    if(!($this->r->checkCurrentPlayer($from, 'attack'))) return;
     if(!($this->hasMachineGun)) {
       if(!($this->r->checkArgs($from, $args, 1))) return;
       $player = $args[0];
-      if(!(isset($this->validTargets[$player])) {
+      if(!(isset($this->validTargets[$player]))) {
         $this->r->mChan("$from: Please choose a valid target to attack.");
         return;
       }

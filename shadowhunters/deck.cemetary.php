@@ -58,7 +58,7 @@ class cecard1 extends cecard {
       return false;
     }
     $player = $args[0];
-    if(!($this->r->validTarget$player)) {
+    if(!($this->r->validTarget($player))) {
       $this->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
@@ -83,7 +83,7 @@ class cecard3 extends cecard {
     $this->type = 'Cemetary';
   }
 }
-class hcard4 extends cecard {
+class cehcard4 extends cecard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Diabolic Ritual';
@@ -173,7 +173,7 @@ class cecard9 extends cecard {
     }
     $player = null;
     $equipment = null;
-    if($this->r->validTarget[$args[0]) {
+    if($this->r->validTarget($args[0])) {
       if(isset($this->r->players[$args[0]]->equipment[$args[1]])) {
         $player = $this->r->players[$args[0]];
         $equipment = $args[1];
@@ -270,7 +270,7 @@ class cecard12 extends cecard {
       return false;
     }
     $player = $args[0];
-    if(!($this->r->validTarget$player)) {
+    if(!($this->r->validTarget($player))) {
       $this->mChan($target->nick.": Please specify a valid player.");
       return false;
     }

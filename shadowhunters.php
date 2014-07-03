@@ -31,7 +31,7 @@ class shadowhunters implements pluginInterface {
   var $game;
   var $started;
 
-  var $players
+  var $players;
   var $phases;
   var $phase; 
   var $currentPlayer;
@@ -200,7 +200,7 @@ class shadowhunters implements pluginInterface {
         if($player->character->name == 'Allie' && $player->alive) $winners[] = $nick;
       }
       sort($winners);
-      $this->mChan("The winner(s) are: ".implode(', ', $winners);
+      $this->mChan("The winner(s) are: ".implode(', ', $winners).".");
       $this->phase = $this->phases['nogame'];
       $this->phase->init();
       return true;

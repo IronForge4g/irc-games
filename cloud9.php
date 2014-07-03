@@ -236,7 +236,7 @@ class cloud9 implements pluginInterface {
     $players = implode(', ', array_keys($this->players));
     $this->mChan("$nick has joined the game. Current players are now: $players");
   }
-  function cmdJump($nick, $tmp) {
+  function cmdJump($nick) {
     if(!($this->started)) {
       $this->mChan("$nick: No game has started yet.");
       return;
