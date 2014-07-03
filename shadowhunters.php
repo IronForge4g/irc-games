@@ -120,15 +120,17 @@ class shadowhunters implements pluginInterface {
     return implode(", ", $players);
   }
   function setPhase($phase) {
-    if($this->checkWin()) return;
-    if(count($this->currentPlayer->steal) > 0) {
-      $this->phase = $this->phases['steal'];
-      $this->phase->return = $phase;
-      $this->phase->init();
-    } else {
-      $this->phase = $this->phases[$phase];
-      $this->phase->init();
+    if($this->currentPlayer != null) {
+      if($this->checkWin()) return;
+      if(count($this->currentPlayer->steal) > 0) {
+        $this->phase = $this->phases['steal'];
+        $this->phase->return = $phase;
+        $this->phase->init();
+      } 
+      return;
     }
+    $this->phase = $this->phases[$phase];
+    $this->phase->init();
   }
   function checkCurrentPlayer($from, $cmd) {
     if($this->p->currentPlayer->nick != $from) {
@@ -159,7 +161,7 @@ class shadowhunters implements pluginInterface {
     $this->mChan('Block 2: '.$this->blocks[1][0]->display().', '.$this->blocks[1][1]->display());
     $this->mChan('Block 3: '.$this->blocks[2][0]->display().', '.$this->blocks[2][1]->display());
     $damage = array();
-    foreach($this->player as $nick => $player) $damage[$nick] = $player->damage;
+    foreach($this->players as $nick => $player) $damage[$nick] = $player->damage;
     ksort($damage);
     asort($damage);
     $display = array();
@@ -188,7 +190,7 @@ class shadowhunters implements pluginInterface {
     if($winner != '') $winners[] = $winner;
     foreach($this->players as $nick => $player) {
       if($nick == $winner) continue;
-      if($player->win()) {
+      if($player->character->win()) {
         $winCount++;
         $winners[] = $nick;
       }

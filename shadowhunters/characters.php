@@ -309,11 +309,6 @@ class schar1 extends char {
   }
 }
 class schar2 extends char {
-  var $p;
-  var $name;
-  var $team;
-  var $life;
-  var $player;
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Werewolf';

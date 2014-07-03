@@ -1,10 +1,10 @@
 <?php
 class phaseSetup {
-  var $p;
+  var $r;
   var $desc;
 
   function __construct($root) {
-    $this->p = $root;
+    $this->r = $root;
     $this->desc = 'Setting up Game';
   }
   function init() {
@@ -12,7 +12,7 @@ class phaseSetup {
     $this->setupCharacters();
     $this->setupAreas();
     $this->r->started = true;
-    $this->r->cmdboard();
+    $this->r->cmdboard(null, array());
     $this->r->setPhase('game');
   }
   function setupPlayers() {
@@ -37,21 +37,21 @@ class phaseSetup {
     $s = array('schar0', 'schar1', 'schar2');
     $playerCount = count($this->r->players);
     if($playerCount == 4) {
-      $deck = array_merge((array)array_rand($s, 2), (array)array_rand($h, 2));
+      $deck = array_merge($this->randDeck($s, 2), $this->randDeck($h, 2));
     } else if($playerCount == 5) {
-      $deck = array_merge((array)array_rand($s, 2), (array)array_rand($h, 2), (array)array_rand($n, 1));
+      $deck = array_merge($this->randDeck($s, 2), $this->randDeck($h, 2), $this->randDeck($n, 1));
     } else if ($playerCount == 6) {
-      $deck = array_merge((array)array_rand($s, 2), (array)array_rand($h, 2), (array)array_rand($n, 2));
+      $deck = array_merge($this->randDeck($s, 2), $this->randDeck($h, 2), $this->randDeck($n, 2));
     } else if ($playerCount == 7) {
-      $deck = array_merge((array)array_rand($s, 2), (array)array_rand($h, 2), (array)array_rand($n, 3));
+      $deck = array_merge($this->randDeck($s, 2), $this->randDeck($h, 2), $this->randDeck($n, 3));
     } else if ($playerCount == 8) {
-      $deck = array_merge((array)array_rand($s, 3), (array)array_rand($h, 3), (array)array_rand($n, 2));
+      $deck = array_merge($this->randDeck($s, 3), $this->randDeck($h, 3), $this->randDeck($n, 2));
     }
     shuffle($deck);
     $players = array_keys($this->r->players);
     foreach($players as $player) {
       $char = array_shift($deck);
-      $character = new $char($this->p);
+      $character = new $char($this->r);
       $character->player = $this->r->players[$player];
       $this->r->players[$player]->character = $character;
       $this->r->nUser($player, "You are {$character->name}. You are on the {$character->team} team.");
@@ -60,7 +60,7 @@ class phaseSetup {
   function setupAreas() {
     for($i=0;$i<6;$i++) {
       $area = 'area'.$i;
-      $newArea = new $area($this->p);
+      $newArea = new $area($this->r);
       $this->r->areas[$area] = $newArea;
       foreach($newArea->numbers as $num) {
         $this->r->areasNum[$num] = $newArea;
@@ -81,6 +81,14 @@ class phaseSetup {
       $this->r->blocks[$bi][0] = $this->r->areas[$block];
       $this->r->blocks[$bi][1] = $this->r->areas[$block1];
     }
+  }
+  function randDeck($deck, $count) {
+    $rand = (array)array_rand($deck, $count);
+    $arr = array();
+    foreach($rand as $key) {
+      $arr[] = $deck[$key];
+    }
+    return $arr;
   }
 }
 ?>

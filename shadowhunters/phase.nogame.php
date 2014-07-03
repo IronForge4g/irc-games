@@ -31,7 +31,7 @@ class phaseNoGame {
       $this->r->mChan("$from: Sorry, maximum number of players ({$this->maxPlayers}) has been reached.");
       return;
     }
-    $this->r->players[$from] = new player($this->p, $from);
+    $this->r->players[$from] = new player($this->r, $from);
     $this->r->mChan("$from: Thank you for joining. Current players are now: ".$this->r->playerList().".");
   }
   function cmdpart($from, $args) {
