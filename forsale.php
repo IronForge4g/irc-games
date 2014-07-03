@@ -22,8 +22,6 @@ class forsale implements pluginInterface {
   Called when plugins are loaded
   **/
   function init($config, $socket) {
-    list($usec, $sec) = explode(' ', microtime());
-    mt_srand((float) $sec + ((float) $usec * 100000));
     $this->config = $config;
     $this->socket = $socket;
     $this->resetVars();
