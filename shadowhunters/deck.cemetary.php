@@ -54,12 +54,12 @@ class cecard1 extends cecard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $this->r->players[$player]->damage(2, 'Bloodthirsty Spider');
@@ -83,7 +83,7 @@ class cecard3 extends cecard {
     $this->type = 'Cemetary';
   }
 }
-class cehcard4 extends cecard {
+class cecard4 extends cecard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Diabolic Ritual';
@@ -266,16 +266,16 @@ class cecard12 extends cecard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $d6 = mt_rand(1,6);
-    $this->mChan($target->nick." rolled a $d6.");
+    $this->r->mChan($target->nick." rolled a $d6.");
     if($d6 < 5) 
       $this->r->players[$player]->damage(3);
     else 
@@ -293,12 +293,12 @@ class cecard13 extends cecard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $this->r->players[$player]->damage(2, 'Vampire Bat');
@@ -316,12 +316,12 @@ class cecard14 extends cecard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $this->r->players[$player]->damage(2, 'Vampire Bat');
@@ -339,12 +339,12 @@ class cecard15 extends cecard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $this->r->players[$player]->damage(2, 'Vampire Bat');

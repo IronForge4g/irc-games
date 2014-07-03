@@ -12,30 +12,30 @@ class phaseSteal {
     $steals = array_keys($this->r->currentPlayer->steal);
     if($this->r->currentPlayer->hasEquipment('Silver Rosary')) {
       $this->r->mChan("$from possesses the Silvery Rosary, stealing all equipment from: ".implode(', ', $steals).".");
-      foreach($this->r->currentPlayer->steals as $nick => $player) {
+      foreach($this->r->currentPlayer->steal as $nick => $player) {
         foreach($player->equipment as $eid => $equip) {
           $this->r->currentPlayer->equipment[] = $equip;
         }
       }
-      foreach($steals as $steal) unset($this->r->currentPlayer->steals[$steal]);
+      foreach($steals as $steal) unset($this->r->currentPlayer->steal[$steal]);
       $this->r->currentPlayer->equipment();
       $this->r->setPhase($return);
       return;
     }
     if($this->r->currentPlayer->character->name == 'Bob' && $this->r->currentPlayer->revealed) {
       $this->r->mChan("$from is Bob. As Bob, he steals all equipment from: ".implode(', ', $steals).".");
-      foreach($this->r->currentPlayer->steals as $nick => $player) {
+      foreach($this->r->currentPlayer->steal as $nick => $player) {
         foreach($player->equipment as $eid => $equip) {
           $this->r->currentPlayer->equipment[] = $equip;
         }
       }
-      foreach($steals as $steal) unset($this->r->currentPlayer->steals[$steal]);
+      foreach($steals as $steal) unset($this->r->currentPlayer->steal[$steal]);
       $this->r->currentPlayer->equipment();
       $this->r->setPhase($return);
       return;
     }
     if(count($steals) > 0) {
-      $this->r->mChan("$from: For having killed off ".implode(', ', $steals).", please !steal a piece of equipment from them.");
+      $this->r->mChan($this->r->currentPlayer->nick.": For having killed off ".implode(', ', $steals).", please !steal a piece of equipment from them.");
     }
   }
   function cmdsteal($from, $args) {

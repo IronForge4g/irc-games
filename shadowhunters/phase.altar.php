@@ -23,7 +23,7 @@ class phaseAltar {
   }
   function cmdsteal($from, $args) {
     if(count($args) != 2) {
-      $this->r->mChan($target->nick.": Please select a valid target and piece of equipment.");
+      $this->r->mChan("$from: Please select a valid target and piece of equipment.");
       return false;
     }
     $player = null;
@@ -41,13 +41,13 @@ class phaseAltar {
       }
     }
     if($player == null) {
-      $this->r->mChan($target->nick.": Please select a valid target and piece of equipment.");
+      $this->r->mChan("$from: Please select a valid target and piece of equipment.");
       return false;
     }
-    $this->r->mChan($target->nick." takes ".$player->equipment[$e]->name." from {$player->nick}.");
-    $target->equipment[] = $player->equipment[$equipment];
+    $this->r->mChan("$from takes ".$player->equipment[$equipment]->name." from {$player->nick}.");
+    $this->r->currentPlayer->equipment[] = $player->equipment[$equipment];
     unset($player->equipment[$equipment]);
-    $target->equipment();
+    $this->r->currentPlayer->equipment();
     $player->equipment();
     $this->r->setPhase('attack');
   }

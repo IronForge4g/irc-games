@@ -15,7 +15,7 @@ class phaseWoods {
     if(!($this->r->checkCurrentPlayer($from, 'Weird Woods'))) return;
     if(!($this->r->checkArgs($from, $args, 1))) return;
     $target = $args[0];
-    if(!($this->r->valdiTarget($target))) {
+    if(!($this->r->validTarget($target))) {
       $this->r->mChan($from.": $target is not a valid player to damage.");
       return;
     }

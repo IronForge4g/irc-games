@@ -10,6 +10,7 @@ class player {
   var $alive;
   var $revealed;
   var $equipment;
+  var $steal;
 
   var $freeTurn;
   var $guardianAngel;
@@ -23,6 +24,7 @@ class player {
     $this->alive = true;
     $this->revealed = false;
     $this->equipment = array();
+    $this->steal = array();
 
     $this->freeTurn = false;
     $this->guardianAngel = false;
@@ -92,7 +94,7 @@ class player {
           break;
         }
       }
-      if(count($this->equipment > 0)) $this->r->currentPlayer->steal[] = $this;
+      if(count($this->equipment) > 0) $this->r->currentPlayer->steal[$this->nick] = $this;
       $this->reveal();
     }
   }
@@ -104,11 +106,11 @@ class player {
   }
   function reveal() {
     if($this->revealed) {
-      $this->r->mChan("{$this->nick} was already revealed as {$this->character->name} ($this->character->team).");
+      $this->r->mChan("{$this->nick} was already revealed as {$this->character->name} ({$this->character->team}).");
       return;
     }
     $this->revealed = true;
-    $this->r->mChan("{$this->nick} is revealed as {$this->character->name} ($this->character->team).");
+    $this->r->mChan("{$this->nick} is revealed as {$this->character->name} ({$this->character->team}).");
   }
 }
 ?>

@@ -19,14 +19,15 @@ class phaseAttack {
       if(!($player->alive)) continue;
       if($this->distance($this->r->currentPlayer, $player) == $targetDistance) $this->validTargets[$nick] = $player;
     }
-    if(count($validTargets) == 0) {
+    if(count($this->validTargets) == 0) {
       $this->r->mChan($this->r->currentPlayer->nick.": You have no valid targets to !attack, please !pass.");
     } else {
       if($this->r->currentPlayer->hasEquipment('Machine Gun')) {
         $this->hasMachineGun = true;
         $this->r->mChan($this->r->currentPlayer->nick.": You have the Machine Gun. Please !attack everyone, or !pass.");
       } else {
-        $this->r->mChan($this->r->currentPlayer->nick.": Please choose a player (".implode(', ', $this->validTargets).") to !attack or !pass.");
+        $targets = array_keys($this->validTargets);
+        $this->r->mChan($this->r->currentPlayer->nick.": Please choose a player (".implode(', ', $targets).") to !attack or !pass.");
       }
     }
   }
@@ -43,24 +44,27 @@ class phaseAttack {
       $this->validTargets = array($args[0] => $player);
     }
     $d4 = mt_rand(1, 4);
-    if($who->hasEquipment('Masamune')) {
-      $this->mChan("$from has the Masamune, and rolls a single d4: $d4.");
+    if($this->r->currentPlayer->hasEquipment('Masamune')) {
+      $this->r->mChan("$from has the Masamune, and rolls a single d4: $d4.");
       $dmg = $d4;
       $this->damageTargets($d4);
       if($this->r->currentPlayer->revealed && $this->r->currentPlayer->character->name == 'Vampire') $this->heal(2);
     } else {
       $d6 = mt_rand(1, 6);
-      $dmg = abs($d6, $d4);
-      if($dmg == 0) {
-        $this->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
+      $diff = $d6 - $d4;
+      $dmg = abs($diff);
+      if($dmg > 0) {
+        $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
         $this->damageTargets($dmg);
         if($this->r->currentPlayer->revealed && $this->r->currentPlayer->character->name == 'Vampire') $this->heal(2);
       } else {
-        $this->r->mChan("$from manages to miss with their attack.");
+        $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6), managing to miss with their attack.");
       }
     }
     foreach($this->validTargets as $nick => $player) {
       if($player->revealed && $player->character->name == 'Werewolf') {
+        $this->r->phases['werewolf']->werewolf = $player;
+        $this->r->phases['werewolf']->target = $this->r->currentPlayer;
         $this->r->setPhase('werewolf');
         return;
       }
@@ -111,7 +115,7 @@ class phaseAttack {
     }
     if(count($adds) > 0) $this->r->mChan("{$this->r->currentPlayer->nick} adds to their attack: ".implode(", ", $adds).".");
     foreach($this->validTargets as $nick => $player)
-      $player->damage($dmg, 'attack');
+      $player->damage($amount, 'attack');
   }
 }
 ?>

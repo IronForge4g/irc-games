@@ -39,9 +39,9 @@ class shadowhunters implements pluginInterface {
   var $areasNum;
   var $blocks;
 
+  var $cemetaryDeck;
+  var $churchDeck;
   var $hermitDeck;
-  var $whiteDeck;
-  var $blackDeck;
 
   function init($config, $socket) {
     $this->config = $config;
@@ -65,6 +65,7 @@ class shadowhunters implements pluginInterface {
     $this->phases['underworld'] = new phaseUnderworld($this);
     $this->phases['werewolf'] = new phaseWerewolf($this);
     $this->phases['woods'] = new phaseWoods($this);
+
     $this->setPhase('nogame');
   }
 
@@ -126,14 +127,14 @@ class shadowhunters implements pluginInterface {
         $this->phase = $this->phases['steal'];
         $this->phase->return = $phase;
         $this->phase->init();
+        return;
       } 
-      return;
     }
     $this->phase = $this->phases[$phase];
     $this->phase->init();
   }
   function checkCurrentPlayer($from, $cmd) {
-    if($this->p->currentPlayer->nick != $from) {
+    if($this->currentPlayer->nick != $from) {
       $this->mChan("$from: Please wait your turn to $cmd.");
       return false;
     }
@@ -169,12 +170,12 @@ class shadowhunters implements pluginInterface {
     $this->mChan('Damage: '.implode(', ', $display));
   }
   function cmdequip($from, $args) {
-    if(!($this->checkArgs($from, $args, 1))) return;
+    if(count($args) == 0) $args[0] = $from;
     if(!(isset($this->players[$args[0]]))) {
       $this->mChan("$from: Please specify a valid player.");
       return;
     }
-    $this->players[$args[0]]->equipment($player);
+    $this->players[$args[0]]->equipment($from);
   }
   function cmdreveal($from, $args) {
     if(!(isset($this->players[$from]))) return;

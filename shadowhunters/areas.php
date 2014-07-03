@@ -19,7 +19,7 @@ class area0 extends area {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Hermits Cabin';
-    $this->phase = 'hermits';
+    $this->phase = 'hermit';
     $this->numbers = array(2, 3);
     $this->block = null;
     $this->side = null;

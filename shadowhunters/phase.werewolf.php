@@ -10,7 +10,7 @@ class phaseWerewolf {
     $this->desc = 'Werewolf Counter';
   }
   function init() {
-    $this->r->mChan($werewolf->nick.": As the Werewolf, you may !counter or !pass");
+    $this->r->mChan($this->werewolf->nick.": As the Werewolf, you may !counter or !pass");
   }
   function cmdcounter($from, $args) {
     if($from != $this->werewolf->nick) {
@@ -18,15 +18,15 @@ class phaseWerewolf {
       return;
     }
     $d4 = mt_rand(1, 4);
-    if($werewolf->hasEquipment('Masamune')) {
-      $this->mChan("$from has the Masamune, and rolls a single d4: $d4.");
+    if($this->werewolf->hasEquipment('Masamune')) {
+      $this->r->mChan("$from has the Masamune, and rolls a single d4: $d4.");
       $dmg = $d4;
       $this->damageTarget($d4);
     } else {
       $d6 = mt_rand(1, 6);
       $dmg = abs($d6, $d4);
       if($dmg == 0) {
-        $this->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
+        $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
         $this->damageTarget($dmg);
       } else {
         $this->r->mChan("$from manages to miss with their attack.");
@@ -47,7 +47,7 @@ class phaseWerewolf {
   }
   function damageTarget($amount) {
     $adds = array();
-    foreach($werewolf->equipment as $eid => $equip) {
+    foreach($this->werewolf->equipment as $eid => $equip) {
       if($equip->name == 'Butcher Knife') {
         $adds[] = 'Butcher Knife (+1)';
         $amount++;
@@ -65,7 +65,7 @@ class phaseWerewolf {
         $amount--;
       }
     }
-    if(count($adds) > 0) $this->r->mChan("{$werewolf->nick} adds to their attack: ".implode(", ", $adds).".");
+    if(count($adds) > 0) $this->r->mChan("{$this->werewolf->nick} adds to their attack: ".implode(", ", $adds).".");
     $this->target->damage($dmg, 'attack');
   }
 }

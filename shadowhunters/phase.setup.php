@@ -13,7 +13,7 @@ class phaseSetup {
     $this->setupAreas();
     $this->r->started = true;
     $this->r->cmdboard(null, array());
-    $this->r->setPhase('game');
+    $this->r->setPhase('move');
   }
   function setupPlayers() {
     $first = null;

@@ -13,7 +13,10 @@ class phaseEnd {
       $this->r->mChan("$from: You have earned a free turn from the Concealed Knowledge.");
       $this->r->currentPlayer->freeTurn = false;
     } else {
-      $this->r->currentPlayer = $this->r->currentPlayer->next;
+      while(true) {
+        $this->r->currentPlayer = $this->r->currentPlayer->next;
+        if($this->r->currentPlayer->alive) break;
+      }
     }
     $this->r->setPhase('move');
   }

@@ -37,12 +37,12 @@ class chcard1 extends chcard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(($player == $target->nick) || (!($this->r->validTarget($player)))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $this->r->players[$player]->heal(mt_rand(1, 6));
@@ -90,7 +90,7 @@ class chcard4 extends chcard {
     $this->type = 'Church';
   }
   function auto($target, $args) {
-    if($target->name == 'Vampire' || $target->name == 'Werewolf') $target->reveal();
+    if($target->character->name == 'Vampire' || $target->character->name == 'Werewolf') $target->reveal();
     return true;
   }
 }
@@ -104,15 +104,15 @@ class chcard5 extends chcard {
   }
   function action($target, $args) {
     if(count($args) != 1) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
     $player = $args[0];
     if(!($this->r->validTarget($player))) {
-      $this->mChan($target->nick.": Please specify a valid player.");
+      $this->r->mChan($target->nick.": Please specify a valid player.");
       return false;
     }
-    $this->mChan($player." now has 7 damage.");
+    $this->r->mChan($player." now has 7 damage.");
     $this->r->players[$player]->damage = 7;
     return true;
   }

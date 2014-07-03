@@ -19,6 +19,8 @@ class phaseNoGame {
     $this->r->areasNum = array();
     $this->r->blocks = array();
     $this->r->mChan("A new game can now begin.");
+    $this->r->cemetaryDeck = new cemetaryDeck($this->r);
+    $this->r->churchDeck = new churchDeck($this->r);
     $this->r->hermitDeck = new hermitDeck($this->r);
   }
   function cmdjoin($from, $args) {

@@ -23,7 +23,7 @@ class phaseCemetary {
       $auto = $this->card->auto($this->r->currentPlayer, array());
       if($auto) {
         $this->r->mChan($this->r->currentPlayer->nick." has drawn {$this->card->name}: '{$this->card->cardText}'");
-        $this->churchDeck->discard($this->card);
+        $this->r->cemetaryDeck->discard($this->card);
         $this->r->setPhase('attack');
         return;
       }
@@ -46,7 +46,7 @@ class phaseCemetary {
     }
     $success = $this->card->action($this->r->currentPlayer, $args);
     if($success) {
-      $this->churchDeck->discard($this->card);
+      $this->r->cemetaryDeck->discard($this->card);
       $this->r->setPhase('attack');
     }
   }

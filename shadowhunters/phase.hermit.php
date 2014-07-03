@@ -33,7 +33,7 @@ class phaseHermit {
   }
   function cmdgive($from, $args) {
     if(!($this->r->checkCurrentPlayer($from, 'Hermit Card'))) return;
-    if($this->card != null) {
+    if($this->card == null) {
       $this->r->mChan($from.": Please draw a card before trying to give it away.");
       return;
     }
@@ -43,7 +43,7 @@ class phaseHermit {
       return;
     } 
     $target = $args[0];
-    if(!($this->r->vaildTarget($target))) {
+    if(!($this->r->validTarget($target))) {
       $this->r->mChan($from.": $target is not a valid player to give this card to.");
       return;
     }
@@ -55,7 +55,6 @@ class phaseHermit {
     $this->target = $targetPlayer;
     $this->validTarget(true);
     $this->r->mChan("$from has given a hermit card to {$this->target->nick}. {$this->target->nick}, what do you do with it?");
-    $this->r->nUser($this->target->nick, "You have been given {$this->card->name}: '{$this->card->cardText}' Please choose to !card to follow the card text, or !nothing for nothing happens.");
   }
   function cmdcard($from, $args) {
     if($this->target == null) {
