@@ -74,11 +74,12 @@ class shadowhunters implements pluginInterface {
   }
 
   function onMessage($from, $channel, $msg) {
-    if($msg{0} != '!') continue;
+    if($channel != $this->channel) return;
+    if($msg{0} != '!') return;
     $args = explode(" ", $msg);
     $cmdRaw = array_shift($args);
     $cmd = 'cmd'.strtolower(substr($cmdRaw, 1));
-    if(trim($cmd) == 'cmd') continue;
+    if(trim($cmd) == 'cmd') return;
     if(method_exists($this, $cmd)) {
       $this->$cmd($from, $args);
     } else if(method_exists($this->phase, $cmd)) {
