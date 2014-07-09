@@ -67,7 +67,7 @@ class phaseWerewolf {
       }
     }
     if(count($adds) > 0) $this->r->mChan("{$this->werewolf->nick} adds to their attack: ".implode(", ", $adds).".");
-    $this->target->damage($dmg, 'attack');
+    $this->target->damage($amount, 'attack');
   }
 }
 ?>

@@ -56,7 +56,7 @@ class phaseAttack {
       if($dmg > 0) {
         $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6) for a base damage of $dmg.");
         $this->damageTargets($dmg);
-        if($this->r->currentPlayer->revealed && $this->r->currentPlayer->character->name == 'Vampire') $this->heal(2);
+        if($this->r->currentPlayer->revealed && $this->r->currentPlayer->character->name == 'Vampire') $this->r->currentPlayer->heal(2);
       } else {
         $this->r->mChan("$from rolls the d4 ($d4) and the d6 ($d6), managing to miss with their attack.");
       }

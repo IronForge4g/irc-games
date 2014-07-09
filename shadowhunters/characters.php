@@ -236,11 +236,11 @@ class hchar2 extends char {
       return;
     }
     if(!($this->r->checkArgs($from, $args, 1))) return;
-    if(!($this->r->currentPhase != $this->r->phases['move'])) {
+    if(!($this->r->phase != $this->r->phases['move'])) {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     } 
-    if(!($this->r->currentPhase->locations != null)) {
+    if(!($this->r->phase->locations != null)) {
       $this->r->mChan("$from: Your action is only available before you roll for the move phase.");
       return;
     }
