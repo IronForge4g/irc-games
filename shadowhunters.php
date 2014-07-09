@@ -163,11 +163,19 @@ class shadowhunters implements pluginInterface {
     $this->mChan('Block 2: '.$this->blocks[1][0]->display().', '.$this->blocks[1][1]->display());
     $this->mChan('Block 3: '.$this->blocks[2][0]->display().', '.$this->blocks[2][1]->display());
     $damage = array();
-    foreach($this->players as $nick => $player) $damage[$nick] = $player->damage;
+    $revealed = array();
+    foreach($this->players as $nick => $player) {
+      if($player->alive) $damage[$nick] = $player->damage;
+      else $damage[$nick] = 'dead';
+      if($player->revealed) $revealed[$nick] = $player->character->name;
+    }
     ksort($damage);
     asort($damage);
     $display = array();
-    foreach($damage as $nick => $dmg) $display[] = "$nick ($dmg)";
+    foreach($damage as $nick => $dmg) {
+      if(isset($revealed[$nick])) $display[] = "$nick (".$revealed[$nick].": $dmg)";
+      else $display[] = "$nick ($dmg)";
+    }
     $this->mChan('Damage: '.implode(', ', $display));
   }
   function cmdequip($from, $args) {
@@ -186,6 +194,22 @@ class shadowhunters implements pluginInterface {
     if(!($this->started)) return;
     if(!(isset($this->players[$from]))) return;
     $this->nUser($from, "You are {$this->players[$from]->character->name} ({$this->players[$from]->character->team}).");
+    $this->nUser($from, "Your action: {$this->players[$from]->character->action}");
+    $this->nUser($from, "Win condition: {$this->players[$from]->character->winCondition}");
+  }
+  function cmdhealth($from, $args) {
+    $this->nUser($from, "Allie (8), Bob (10), Charles (11), Daniel (13), Emi (10), Franklin (12), George (14), Unknown (11), Vampire (13), Werewolf (14)");
+  }
+  function cmdareas($from, $args) {
+    $this->nUser($from, '(2/3) Hermits Cabin - The player draws a card from the top of the Green Cards stack and confirms what is written on it, then gives it to another player of their choice.');
+    $this->nUser($from, '(4/5) Underworld Gate - The player chooses one of the three card stacks (White, Black, or Green) and draws a card from teht op of that stack, then follows the instructions.');
+    $this->nUser($from, '(6) Church - The player draws a card from the top of the White Cards stack and follows the instructions.');
+    $this->nUser($from, '(8) Cemetary - The player draws a card from the top of the Black Cards stack and follows the instructions.');
+    $this->nUser($from, '(9) Weird Woods - The player chooses a player and deals 2 points of damage, or heals 1 point of damage. The player may choose themselves.');
+    $this->nUser($from, '(10) Erstwhile Altar - The player steals an equipment card from another player.');
+  }
+  function cmdaction($from, $args) {
+    $this->cmdchar($from, $args);
   }
   function cmdchar($from, $args) {
     if(!(isset($this->players[$from]))) return;

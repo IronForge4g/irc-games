@@ -26,7 +26,7 @@ class hcard1 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Anger';
-    $this->cardText = 'Hunter or Shadow - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Hunter or Shadow - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Hunter', 'Shadow');
     $this->type = 'Hermit';
   }
@@ -49,7 +49,7 @@ class hcard2 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Anger';
-    $this->cardText = 'Hunter or Shadow - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Hunter or Shadow - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Hunter', 'Shadow');
     $this->type = 'Hermit';
   }
@@ -72,7 +72,7 @@ class hcard3 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Blackmail';
-    $this->cardText = 'Hunter or Neutral - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Hunter or Neutral - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Hunter', 'Neutral');
     $this->type = 'Hermit';
   }
@@ -95,7 +95,7 @@ class hcard4 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Blackmail';
-    $this->cardText = 'Hunter or Neutral - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Hunter or Neutral - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Hunter', 'Neutral');
     $this->type = 'Hermit';
   }
@@ -142,7 +142,7 @@ class hcard7 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Greed';
-    $this->cardText = 'Neutral or Shadow - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Neutral or Shadow - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Neutral', 'Shadow');
     $this->type = 'Hermit';
   }
@@ -165,7 +165,7 @@ class hcard8 extends hcard {
   function __construct($root) {
     $this->r = $root;
     $this->name = 'Greed';
-    $this->cardText = 'Neutral or Shadow - give 1 equipment to current player or take 1 damage.';
+    $this->cardText = 'Neutral or Shadow - give 1 equipment to current player or take 1 damage. (!card A will give away A equipment, !card will take the damage.)';
     $this->targets = array('Neutral', 'Shadow');
     $this->type = 'Hermit';
   }

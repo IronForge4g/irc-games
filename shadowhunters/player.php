@@ -75,6 +75,7 @@ class player {
     $this->damage += $amount;
     if($this->damage >= $this->character->life) {
       $this->alive = false;
+      unset($this->location->players[$this->nick]);
       $this->r->mChan("{$this->nick} has been killed by {$this->r->currentPlayer->nick}.");
       if($this->r->currentPlayer->character->name == 'Charles') {
         $dead = 0;

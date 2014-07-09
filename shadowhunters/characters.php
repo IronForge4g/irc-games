@@ -3,6 +3,8 @@ class char {
   var $r;
   var $name;
   var $team;
+  var $action;
+  var $winCondition;
   var $life;
   var $player;
 }
@@ -12,6 +14,8 @@ class nchar0 extends char {
     $this->r = $root;
     $this->name = 'Allie';
     $this->team = 'Neutral';
+    $this->action = 'Fully heal your damage. (Only once per game.)';
+    $this->winCondition = 'You\'re not dead when the game is over.';
     $this->life = 8;
     $this->player = null;
     $this->actionUsed = false;
@@ -38,6 +42,8 @@ class nchar1 extends char {
     $this->r = $root;
     $this->name = 'Bob';
     $this->team = 'Neutral';
+    $this->action = 'If your attack kills a character, you take all the Equipment cards that character had.';
+    $this->winCondition = 'You have 4 or more Equipment cards.';
     $this->life = 10;
     $this->player = null;
   }
@@ -58,6 +64,8 @@ class nchar2 extends char {
     $this->r = $root;
     $this->name = 'Charles';
     $this->team = 'Neutral';
+    $this->action = 'After you attack, you may give yourself 2 points of damage to attack the same character again.';
+    $this->winCondition = 'At the time you kill another character, the total number of dead characters is 3 or more.';
     $this->life = 11;
     $this->player = null;
   }
@@ -77,6 +85,8 @@ class nchar3 extends char {
     $this->r = $root;
     $this->name = 'Daniel';
     $this->team = 'Neutral';
+    $this->action = 'As soon as another player dies, you must reveal your identity.';
+    $this->winCondition = 'You are the first character to die OR all the Shadow characters are dead and you are not.';
     $this->life = 13;
     $this->player = null;
   }
@@ -105,6 +115,8 @@ class hchar0 extends char {
     $this->r = $root;
     $this->name = 'Emi';
     $this->team = 'Hunter';
+    $this->action = 'When you move, you can roll dice as normal or move to an adjacent Area Card.';
+    $this->winCondition = 'All the Shadow characters are dead.';
     $this->life = 10;
     $this->player = null;
   }
@@ -170,6 +182,8 @@ class hchar1 extends char {
     $this->r = $root;
     $this->name = 'Franklin';
     $this->team = 'Hunter';
+    $this->action = 'At the start of your turn, you can pick any player and give him/her damage equal to the roll of a 6-sided die.';
+    $this->winCondition = 'All the Shadow characters are dead.';
     $this->life = 12;
     $this->player = null;
     $this->actionUsed = false;
@@ -215,6 +229,8 @@ class hchar2 extends char {
     $this->r = $root;
     $this->name = 'George';
     $this->team = 'Hunter';
+    $this->action = 'At the start of your turn, you can pick any player and give him/her damage equal to the roll of a 4-sided die.';
+    $this->winCondition = 'All the Shadow characters are dead.';
     $this->life = 14;
     $this->player = null;
     $this->actionUsed = false;
@@ -259,6 +275,8 @@ class schar0 extends char {
     $this->r = $root;
     $this->name = 'Unknown';
     $this->team = 'Shadow';
+    $this->action = 'You may lie when given a Hermit card. You don\'t have to !reveal your identity to do this.';
+    $this->winCondition = 'All the Hunter characters are dead, OR 3 Neutral characters are dead.';
     $this->life = 11;
     $this->player = null;
   }
@@ -286,6 +304,8 @@ class schar1 extends char {
     $this->r = $root;
     $this->name = 'Vampire';
     $this->team = 'Shadow';
+    $this->action = 'If you attack a player and inflict damage, you heal 2 points of your own damage.';
+    $this->winCondition = 'All the Hunter characters are dead, OR 3 Neutral characters are dead.';
     $this->life = 13;
     $this->player = null;
   }
@@ -313,6 +333,8 @@ class schar2 extends char {
     $this->r = $root;
     $this->name = 'Werewolf';
     $this->team = 'Shadow';
+    $this->action = 'After you are attacked, you can attack that character immediately.';
+    $this->winCondition = 'All the Hunter characters are dead, OR 3 Neutral characters are dead.';
     $this->life = 14;
     $this->player = null;
   }

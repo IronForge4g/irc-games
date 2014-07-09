@@ -52,7 +52,10 @@ class phaseHermit {
       $this->r->mChan($from.": $target is not a valid player to give this card to.");
       return;
     }
-    $this->target = $targetPlayer;
+    if($targetPlayer == $this->r->currentPlayer) {
+      $this->r->mChan($from.": Please choose someone other than yourself.");
+      return;
+    }    $this->target = $targetPlayer;
     $this->validTarget(true);
     $this->r->mChan("$from has given a hermit card to {$this->target->nick}. {$this->target->nick}, what do you do with it?");
   }

@@ -55,6 +55,8 @@ class phaseSetup {
       $character->player = $this->r->players[$player];
       $this->r->players[$player]->character = $character;
       $this->r->nUser($player, "You are {$character->name}. You are on the {$character->team} team.");
+      $this->r->nUser($from, "Your action: {$character->action}");
+      $this->r->nUser($from, "Win condition: {$character->winCondition}");
     } 
   }
   function setupAreas() {

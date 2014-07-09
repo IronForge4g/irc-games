@@ -37,6 +37,9 @@ class phaseMove {
       $this->cmdmove($from, array('A'));
     }
   }
+  function cmdgoto($from, $args) {
+    $this->cmdmove($from, $args);
+  }
   function cmdmove($from, $args) {
     if($this->seven) {
       $this->moveSeven($from, $args);
