@@ -5,6 +5,8 @@ class phaseAttack {
 
   var $validTargets;
   var $hasMachineGun;
+  var $tick;
+  var $args;
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Attack';
@@ -13,6 +15,8 @@ class phaseAttack {
     $this->validTargets = array();
     $this->hasMachineGun = false;
     $targetDistance = 0;
+    $this->tick = null;
+    $this->args = null;
     if($this->r->currentPlayer->hasEquipment('Handgun')) $targetDistance = 1;
     foreach($this->r->players as $nick => $player) {
       if($this->r->currentPlayer == $player) continue;
@@ -31,8 +35,19 @@ class phaseAttack {
       }
     }
   }
+  function tick() {
+    if($this->tick == null) return;
+    if($this->tick < time()) {
+      $this->tick = null;
+      $this->finishAttack();
+    }
+  }
   function cmdattack($from, $args) {
     if(!($this->r->checkCurrentPlayer($from, 'attack'))) return;
+    if($this->tick != null) {
+      $this->r->mChan("$from: An attack has already begun.");
+      return;
+    }
     if(!($this->hasMachineGun)) {
       if(!($this->r->checkArgs($from, $args, 1))) return;
       $player = $args[0];
@@ -43,6 +58,13 @@ class phaseAttack {
       $player = $this->validTargets[$player];
       $this->validTargets = array($args[0] => $player);
     }
+    $targets = array_keys($this->validTargets);
+    $this->r->mChan("$from is attacking ".implode(', ', $targets).".");
+    $this->tick = time() + 10;
+    $this->args = $args;
+  }
+  function finishAttack() {
+    $from = $this->r->currentPlayer->nick;
     $d4 = mt_rand(1, 4);
     if($this->r->currentPlayer->hasEquipment('Masamune')) {
       $this->r->mChan("$from has the Masamune, and rolls a single d4: $d4.");
@@ -70,13 +92,17 @@ class phaseAttack {
       }
     }
     if($this->r->currentPlayer->character->name == 'Charles' && $this->r->currentPlayer->revealed) {
-      $this->r->phases['charles']->args = $args;
+      $this->r->phases['charles']->args = $this->args;
       $this->r->setPhase('charles');
     }
     $this->r->setPhase('end');
   }
   function cmdpass($from, $args) {
     if(!($this->r->checkCurrentPlayer($from, 'Attack'))) return;
+    if($this->tick != null) {
+      $this->r->mChan("$from: An attack has already begun.");
+      return;
+    }
     if($this->r->currentPlayer->hasEquipment('Masamune')) {
       $this->r->mChan("$from: You possess the Masamune, and must attack.");
       return;

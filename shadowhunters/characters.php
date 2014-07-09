@@ -24,13 +24,12 @@ class nchar0 extends char {
     return false;
   }
   function action($from, $args) {
-    if(!($this->player->revealed)) {
-      $this->r->mChan("$from: You must !reveal first.");
-      return;
-    }
     if($this->actionUsed) {
       $this->r->mChan("$from: You have already used your action this game.");
       return;
+    }
+    if(!($this->player->revealed)) {
+      $this->player->reveal();
     }
     $this->actionUsed = true;
     $this->player->damage = 0;
@@ -246,7 +245,7 @@ class hchar2 extends char {
       $this->r->mChan("$from: You must !reveal first.");
       return;
     }
-    if(!($this->r->checkCurrentPlayer($from, 'Franklin Action'))) return;
+    if(!($this->r->checkCurrentPlayer($from, 'George Action'))) return;
     if($this->actionUsed) {
       $this->r->mChan("$from: You have already used your action this game.");
       return;

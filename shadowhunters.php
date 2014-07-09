@@ -70,7 +70,8 @@ class shadowhunters implements pluginInterface {
   }
 
   function tick() {
-
+    if(!($this->started)) return;
+    if(method_exists($this->phase, 'tick')) $this->phase->tick();
   }
 
   function onMessage($from, $channel, $msg) {
