@@ -12,10 +12,9 @@ class deck {
       $this->deck = $this->discard;
       $this->discard = array();
     }
-    $keys = array_keys($this->deck);
-    shuffle($keys);
-    $card = $this->deck[$keys[0]];
-    unset($this->deck[$keys[0]]);
+    $key = array_rand($this->deck);
+    $card = $this->deck[$key];
+    unset($this->deck[$key]);
     return $card;
   }
   function discard($card) {

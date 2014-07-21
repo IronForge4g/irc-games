@@ -18,7 +18,7 @@ require_once('shadowhunters\phase.underworld.php');
 require_once('shadowhunters\phase.werewolf.php');
 require_once('shadowhunters\phase.woods.php');
 
-require_once('shadowhunters\deck.base.php');
+require_once('generic\deck.base.php');
 require_once('shadowhunters\deck.cemetary.php');
 require_once('shadowhunters\deck.church.php');
 require_once('shadowhunters\deck.hermit.php');
