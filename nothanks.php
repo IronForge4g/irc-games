@@ -69,7 +69,6 @@ class nothanks implements pluginInterface {
     }
   }
   function onQuit($from) {
-    echo "Processing On Quit\n";
     if(isset($this->players[$from])) {
       if($from == $this->currentPlayer) {
         $this->nextPlayer(); 

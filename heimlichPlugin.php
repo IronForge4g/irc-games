@@ -102,25 +102,6 @@ the bot are in, or when somebody talks to it
   }
 
   function onQuit($from) {
-    /*
-     * Wait for their return.
-     echo "Processing On Quit\n";
-    if(isset($this->players[$from])) {
-      if($from == $this->currentPlayer) {
-        $this->nextPlayer();
-  }
-  $this->mChan("$from has left, and thus been eliminated! The current player is ".$this->currentPlayer.".");
-  unset($this->players[$from]);
-  unset($this->hands[$from]);
-  if(count($this->players) == 1) {
-    $winner = array_shift(array_keys($this->players));
-    $this->mChan("Only $winner remains! They win!");
-    $this->resetVars();
-    $this->mChan("A new game can now begin. Please !join if you would like to play again.");
-    return;
-  }
-  }
-     */
   }
 
 /**

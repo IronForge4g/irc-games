@@ -82,7 +82,6 @@ class phaseMove {
   function rollMovement() {
     while(true) {
       $dice = mt_rand(1, 4) + mt_rand(1, 6);
-      print_r($dice);
       if($dice == 7) {
         $this->seven = true;
         return;

@@ -73,7 +73,6 @@ class powwow implements pluginInterface {
     }
   }
   function onQuit($from) {
-    echo "Processing On Quit\n";
     if(isset($this->players[$from])) {
       $this->mChan("$from has left, and thus been eliminated!");
       $this->discard($this->cards[$from]);

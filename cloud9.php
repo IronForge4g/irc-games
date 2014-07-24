@@ -168,18 +168,18 @@ class cloud9 implements pluginInterface {
     sort($this->requiredSkills);
   }
   function cmdhelp($from, $args) {
-    $this->nUser($nick, "!rules - Show's the rules for Cloud 9.");
-    $this->nUser($nick, "!start - Start a new game of Cloud 9.");
-    $this->nUser($nick, "!join - Join a game.");
-    $this->nUser($nick, "!part - Part a game.");
-    $this->nUser($nick, "!jump - Jump out of the balloon.");
-    $this->nUser($nick, "!stay - Stay in the balloon.");
-    $this->nUser($nick, "!pilot - Show if you can pilot the balloon safely or not.");
-    $this->nUser($nick, "!rainbow - Pilot with a rainbow card.");
+    $this->nUser($from, "!rules - Show's the rules for Cloud 9.");
+    $this->nUser($from, "!start - Start a new game of Cloud 9.");
+    $this->nUser($from, "!join - Join a game.");
+    $this->nUser($from, "!part - Part a game.");
+    $this->nUser($from, "!jump - Jump out of the balloon.");
+    $this->nUser($from, "!stay - Stay in the balloon.");
+    $this->nUser($from, "!pilot - Show if you can pilot the balloon safely or not.");
+    $this->nUser($from, "!rainbow - Pilot with a rainbow card.");
   }
   function cmdrules($from, $args) {
-    $this->nUser($nick, "Cloud 9 is an IRC implementation of the game Cloud 9!");
-    $this->nUser($nick, "The rules can be found online at http://www.otb-games.com/wordpress/wp-content/uploads/2011/05/cloud9_rules.pdf");
+    $this->nUser($from, "Cloud 9 is an IRC implementation of the game Cloud 9!");
+    $this->nUser($from, "The rules can be found online at http://www.otb-games.com/wordpress/wp-content/uploads/2011/05/cloud9_rules.pdf");
   }
 }
 ?>
