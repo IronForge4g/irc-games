@@ -41,6 +41,15 @@ class phaseYardmasterExpressGame {
   function cmdpc($from, $args) {
     $this->cmdplay($from, array('c'));
   }
+  function cmdpd($from, $args) {
+    $this->cmdplay($from, array('d'));
+  }
+  function cmdpe($from, $args) {
+    $this->cmdplay($from, array('e'));
+  }
+  function cmdpf($from, $args) {
+    $this->cmdplay($from, array('f'));
+  }
   function cmdp($from, $args) {
     $this->cmdplay($from, $args);
   }
@@ -77,6 +86,15 @@ class phaseYardmasterExpressGame {
   }
   function cmdwc($from, $args) {
     $this->cmdwild($from, array('c'));
+  }
+  function cmdwd($from, $args) {
+    $this->cmdwild($from, array('d'));
+  }
+  function cmdwe($from, $args) {
+    $this->cmdwild($from, array('e'));
+  }
+  function cmdwf($from, $args) {
+    $this->cmdwild($from, array('f'));
   }
   function cmdw($from, $args) {
     $this->cmdwild($from, $args);
