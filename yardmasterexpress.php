@@ -136,7 +136,7 @@ class yardmasterexpress implements pluginInterface {
     else return "$c points";
   }
   function cmdhelp($from, $args) {
-    $this->nUser($from, "!rules - Show's the rules for Yardmaster Express.");
+    $this->nUser($from, "!rules - Shows the rules for Yardmaster Express.");
     $this->nUser($from, "!start - Start a new game of Yardmaster Express.");
     $this->nUser($from, "!join - Join a game.");
     $this->nUser($from, "!part - Part a game.");

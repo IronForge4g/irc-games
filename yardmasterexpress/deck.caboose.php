@@ -252,8 +252,8 @@ class caboose7 extends caboose {
   }
   function win() {
     $winners = array();
-    $mixed = false;
     foreach($this->r->players as $nick => $player) {
+      $mixed = false;
       foreach($player->train as $car) {
         if($car->leftColor != $car->rightColor) $mixed = true;
       }
