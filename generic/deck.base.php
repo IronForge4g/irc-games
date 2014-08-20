@@ -20,5 +20,8 @@ class deck {
   function discard($card) {
     $this->discard[] = $card;
   }
+  function count() {
+    return count($this->deck);
+  }
 }
 ?>

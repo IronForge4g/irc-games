@@ -5,11 +5,13 @@ class phaseHattariNoGame {
 
   var $minPlayers;
   var $maxPlayers;
+  var $loaded;
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Waiting for Players';
     $this->minPlayers = 2;
     $this->maxPlayers = 4;
+    $this->loaded = false;
   }
   function init() {
     $this->r->started = false;
@@ -19,7 +21,8 @@ class phaseHattariNoGame {
     $this->r->currentPlayer = null;
     $this->r->suspects = array();
 
-    $this->r->mChan("A new game can now begin.");
+    if(!($this->loaded)) $this->loaded = true;
+    else $this->r->mChan("A new game can now begin.");
   }
   function cmdjoin($from, $args) {
     if(isset($this->r->players[$from])) {

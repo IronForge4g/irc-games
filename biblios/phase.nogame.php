@@ -1,5 +1,5 @@
 <?php
-class phaseCloud9NoGame {
+class phaseBibliosNoGame {
   var $r;
   var $desc;
 
@@ -9,8 +9,8 @@ class phaseCloud9NoGame {
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Waiting for Players';
-    $this->minPlayers = 3;
-    $this->maxPlayers = 6;
+    $this->minPlayers = 2;
+    $this->maxPlayers = 4;
     $this->loaded = false;
   }
   function init() {
@@ -19,11 +19,6 @@ class phaseCloud9NoGame {
     $this->r->playerMap = array();
     $this->r->currentPlayer = null;
 
-    $this->r->deck = array();
-    $this->r->cloudDice = array(0, 2, 2, 2, 3, 3, 3, 4, 4, 0);
-    $this->r->cloudPoints = array(0, 1, 2, 4, 6, 9, 12, 15, 20, 25);
-    $this->r->currentCloud = 1;
-    
     if(!($this->loaded)) $this->loaded = true;
     else $this->r->mChan("A new game can now begin.");
   }
@@ -37,7 +32,7 @@ class phaseCloud9NoGame {
       $this->r->mChan("$from: Sorry, maximum number of players ({$this->maxPlayers}) has been reached.");
       return;
     }
-    $this->r->players[$from] = new cloud9Player($this->r, $from);
+    $this->r->players[$from] = new bibliosPlayer($this->r, $from);
     $this->r->playerMap[strtolower($from)] = $this->r->players[$from];
     $this->r->mChan("$from: Thank you for joining. Current players are now: ".$this->r->playerList().".");
   }

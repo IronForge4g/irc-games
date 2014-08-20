@@ -5,11 +5,13 @@ class phaseYardmasterExpressNoGame {
 
   var $minPlayers;
   var $maxPlayers;
+  var $loaded;
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Waiting for Players';
     $this->minPlayers = 2;
     $this->maxPlayers = 5;
+    $this->loaded = false;
   }
   function init() {
     $this->r->started = false;
@@ -17,7 +19,8 @@ class phaseYardmasterExpressNoGame {
     $this->r->playerMap = array();
     $this->r->currentPlayer = null;
 
-    $this->r->mChan("A new game can now begin.");
+    if(!($this->loaded)) $this->loaded = true;
+    else $this->r->mChan("A new game can now begin.");
   }
   function cmdjoin($from, $args) {
     if(isset($this->r->players[$from])) {

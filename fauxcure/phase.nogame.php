@@ -5,18 +5,21 @@ class phaseFauxCureNoGame {
 
   var $minPlayers;
   var $maxPlayers;
+  var $loaded;
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Waiting for Players';
     $this->minPlayers = 3;
     $this->maxPlayers = 99;
+    $this->loaded = false;
   }
   function init() {
     $this->r->started = false;
     $this->r->players = array();
     $this->r->playerMap = array();
     $this->r->currentPlayer = null;
-    $this->r->mChan("A new game can now begin.");
+    if(!($this->loaded)) $this->loaded = true;
+    else $this->r->mChan("A new game can now begin.");
   }
   function cmdjoin($from, $args) {
     if(isset($this->r->players[$from])) {

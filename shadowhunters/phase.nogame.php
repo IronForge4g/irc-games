@@ -5,11 +5,13 @@ class phaseNoGame {
 
   var $minPlayers;
   var $maxPlayers;
+  var $loaded;
   function __construct($root) {
     $this->r = $root;
     $this->desc = 'Waiting for Players';
     $this->minPlayers = 4;
     $this->maxPlayers = 8;
+    $this->loaded = false;
   }
   function init() {
     $this->r->started = false;
@@ -18,10 +20,11 @@ class phaseNoGame {
     $this->r->areas = array();
     $this->r->areasNum = array();
     $this->r->blocks = array();
-    $this->r->mChan("A new game can now begin.");
     $this->r->cemetaryDeck = new cemetaryDeck($this->r);
     $this->r->churchDeck = new churchDeck($this->r);
     $this->r->hermitDeck = new hermitDeck($this->r);
+    if(!($this->loaded)) $this->loaded = true;
+    else $this->r->mChan("A new game can now begin.");
   }
   function cmdjoin($from, $args) {
     if(isset($this->r->players[$from])) {
