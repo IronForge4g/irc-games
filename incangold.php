@@ -317,6 +317,7 @@ class incangold implements pluginInterface {
       if(in_array($card, $this->tableCards)) {
         $this->mChan("Pushing into the darkness, you come face to face with a menacing looking $card. Screaming like a little girl, you drop your bag of loot, and flee...The $card takes up your loot, and skips merrily away...");
         $this->newRound();
+        if(!($this->started)) return;
       }
       else {
         $this->mChan("As you delve deeper into the temple, you see a menacing looking $card. You sidestep down another path, fearing the worst...");
