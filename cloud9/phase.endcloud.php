@@ -75,7 +75,6 @@ class phaseCloud9EndCloud {
     } else {
       $this->r->mChan("$from pretends like they know what they're doing, crashing the balloon into the ground. Way to go $from.");
       $this->r->currentPlayer = $this->r->currentPlayer->left;
-      $this->r->currentCloud = 1;
       $this->r->setPhase('endclimb');
       return;
     }

@@ -19,6 +19,7 @@ class phaseCloud9EndClimb {
       $player->hand[] = $this->r->deck->draw();
       sort($player->hand);
     }
+    $this->r->currentCloud = 1;
     $this->r->setPhase('startcloud');
   }
 }
