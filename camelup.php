@@ -1,13 +1,13 @@
 <?php
-require_once('camelup\player.php');
-require_once('camelup\camel.php');
+require_once('camelup/player.php');
+require_once('camelup/camel.php');
 
-require_once('camelup\phase.nogame.php');
-require_once('camelup\phase.setup.php');
-require_once('camelup\phase.startleg.php');
-require_once('camelup\phase.leg.php');
-require_once('camelup\phase.endleg.php');
-require_once('camelup\phase.end.php');
+require_once('camelup/phase.nogame.php');
+require_once('camelup/phase.setup.php');
+require_once('camelup/phase.startleg.php');
+require_once('camelup/phase.leg.php');
+require_once('camelup/phase.endleg.php');
+require_once('camelup/phase.end.php');
 
 class camelup implements pluginInterface {
   var $config;

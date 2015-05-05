@@ -161,7 +161,7 @@ class phaseDeadDropGame {
     } else {
       $this->r->mChan($from." failed to grab the stash with {$player->hand[$card1]}+{$player->hand[$card2]}.");
       $letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
-      $c = 25 - count($this->table);
+      $c = 25 - count($this->r->table);
       foreach($player->hand as $letter => $card) {
         $this->r->table[$letters[$c]] = $card;
         $c--;

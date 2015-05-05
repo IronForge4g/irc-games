@@ -1,12 +1,12 @@
 <?php
-require_once('hattari\player.php');
+require_once('hattari/player.php');
 
-require_once('hattari\phase.nogame.php');
-require_once('hattari\phase.setup.php');
-require_once('hattari\phase.first.php');
-require_once('hattari\phase.swap.php');
-require_once('hattari\phase.accuse.php');
-require_once('hattari\phase.end.php');
+require_once('hattari/phase.nogame.php');
+require_once('hattari/phase.setup.php');
+require_once('hattari/phase.first.php');
+require_once('hattari/phase.swap.php');
+require_once('hattari/phase.accuse.php');
+require_once('hattari/phase.end.php');
 
 class hattari implements pluginInterface {
   var $config;

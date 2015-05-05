@@ -1,12 +1,12 @@
 <?php
-require_once('fauxcure\player.php');
+require_once('fauxcure/player.php');
 
-require_once('fauxcure\phase.nogame.php');
-require_once('fauxcure\phase.setup.php');
-require_once('fauxcure\phase.round1.php');
-require_once('fauxcure\phase.round2.php');
-require_once('fauxcure\phase.round3.php');
-require_once('fauxcure\phase.end.php');
+require_once('fauxcure/phase.nogame.php');
+require_once('fauxcure/phase.setup.php');
+require_once('fauxcure/phase.round1.php');
+require_once('fauxcure/phase.round2.php');
+require_once('fauxcure/phase.round3.php');
+require_once('fauxcure/phase.end.php');
 
 class fauxcure implements pluginInterface {
   var $config;

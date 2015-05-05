@@ -1,15 +1,15 @@
 <?php
-require_once('deaddrop\player.php');
+require_once('deaddrop/player.php');
 
-require_once('deaddrop\phase.nogame.php');
-require_once('deaddrop\phase.setup.php');
-require_once('deaddrop\phase.game.php');
-require_once('deaddrop\phase.trade.php');
-require_once('deaddrop\phase.newround.php');
-require_once('deaddrop\phase.end.php');
+require_once('deaddrop/phase.nogame.php');
+require_once('deaddrop/phase.setup.php');
+require_once('deaddrop/phase.game.php');
+require_once('deaddrop/phase.trade.php');
+require_once('deaddrop/phase.newround.php');
+require_once('deaddrop/phase.end.php');
 
-require_once('generic\deck.base.php');
-require_once('deaddrop\deck.deaddrop.php');
+require_once('generic/deck.base.php');
+require_once('deaddrop/deck.deaddrop.php');
 
 class deaddrop implements pluginInterface {
   var $config;

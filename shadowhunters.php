@@ -1,27 +1,27 @@
 <?php
-require_once('shadowhunters\player.php');
-require_once('shadowhunters\areas.php');
-require_once('shadowhunters\characters.php');
+require_once('shadowhunters/player.php');
+require_once('shadowhunters/areas.php');
+require_once('shadowhunters/characters.php');
 
-require_once('shadowhunters\phase.altar.php');
-require_once('shadowhunters\phase.attack.php');
-require_once('shadowhunters\phase.cemetary.php');
-require_once('shadowhunters\phase.charles.php');
-require_once('shadowhunters\phase.church.php');
-require_once('shadowhunters\phase.end.php');
-require_once('shadowhunters\phase.hermit.php');
-require_once('shadowhunters\phase.move.php');
-require_once('shadowhunters\phase.nogame.php');
-require_once('shadowhunters\phase.setup.php');
-require_once('shadowhunters\phase.steal.php');
-require_once('shadowhunters\phase.underworld.php');
-require_once('shadowhunters\phase.werewolf.php');
-require_once('shadowhunters\phase.woods.php');
+require_once('shadowhunters/phase.altar.php');
+require_once('shadowhunters/phase.attack.php');
+require_once('shadowhunters/phase.cemetary.php');
+require_once('shadowhunters/phase.charles.php');
+require_once('shadowhunters/phase.church.php');
+require_once('shadowhunters/phase.end.php');
+require_once('shadowhunters/phase.hermit.php');
+require_once('shadowhunters/phase.move.php');
+require_once('shadowhunters/phase.nogame.php');
+require_once('shadowhunters/phase.setup.php');
+require_once('shadowhunters/phase.steal.php');
+require_once('shadowhunters/phase.underworld.php');
+require_once('shadowhunters/phase.werewolf.php');
+require_once('shadowhunters/phase.woods.php');
 
-require_once('generic\deck.base.php');
-require_once('shadowhunters\deck.cemetary.php');
-require_once('shadowhunters\deck.church.php');
-require_once('shadowhunters\deck.hermit.php');
+require_once('generic/deck.base.php');
+require_once('shadowhunters/deck.cemetary.php');
+require_once('shadowhunters/deck.church.php');
+require_once('shadowhunters/deck.hermit.php');
 
 
 class shadowhunters implements pluginInterface {

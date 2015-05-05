@@ -19,7 +19,7 @@ class phaseSteal {
       }
       foreach($steals as $steal) unset($this->r->currentPlayer->steal[$steal]);
       $this->r->currentPlayer->equipment();
-      $this->r->setPhase($return);
+      $this->r->setPhase($this->return);
       return;
     }
     if($this->r->currentPlayer->character->name == 'Bob' && $this->r->currentPlayer->revealed) {
@@ -31,7 +31,7 @@ class phaseSteal {
       }
       foreach($steals as $steal) unset($this->r->currentPlayer->steal[$steal]);
       $this->r->currentPlayer->equipment();
-      $this->r->setPhase($return);
+      $this->r->setPhase($this->return);
       return;
     }
     if(count($steals) > 0) {
@@ -59,7 +59,7 @@ class phaseSteal {
       $this->r->mChan($from.": Please select a valid target and piece of equipment.");
       return false;
     }
-    $this->r->mChan($from." takes ".$player->equipment[$e]->name." from {$player->nick}. The rest is discarded.");
+    $this->r->mChan($from." takes ".$player->equipment[$equipment]->name." from {$player->nick}. The rest is discarded.");
     $target = $this->r->currentPlayer;
     $target->equipment[] = $player->equipment[$equipment];
     unset($player->equipment[$equipment]);
@@ -73,7 +73,7 @@ class phaseSteal {
     foreach($eids as $eid) unset($player->equipment[$eid]);
     unset($this->r->currentPlayer->steal[$player->nick]);
     if(count($this->r->currentPlayer->steal) == 0) {
-      $this->r->setPhase($return);
+      $this->r->setPhase($this->return);
     } else {
       $steals = array_keys($this->r->currentPlayer->steal);
       $this->r->mChan("$from: You still need to take from: ".implode(', ', $steals).".");

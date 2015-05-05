@@ -1,17 +1,17 @@
 <?php
-require_once('biblios\player.php');
+require_once('biblios/player.php');
 
-require_once('biblios\phase.nogame.php');
-require_once('biblios\phase.setup.php');
-require_once('biblios\phase.gift.php');
-require_once('biblios\phase.draft.php');
-require_once('biblios\phase.auction.php');
-require_once('biblios\phase.church.php');
-require_once('biblios\phase.pay.php');
-require_once('biblios\phase.end.php');
+require_once('biblios/phase.nogame.php');
+require_once('biblios/phase.setup.php');
+require_once('biblios/phase.gift.php');
+require_once('biblios/phase.draft.php');
+require_once('biblios/phase.auction.php');
+require_once('biblios/phase.church.php');
+require_once('biblios/phase.pay.php');
+require_once('biblios/phase.end.php');
 
-require_once('generic\deck.base.php');
-require_once('biblios\deck.biblios.php');
+require_once('generic/deck.base.php');
+require_once('biblios/deck.biblios.php');
 
 class biblios implements pluginInterface {
   var $config;

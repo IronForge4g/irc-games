@@ -1,16 +1,17 @@
 <?php
-require_once('yardmasterexpress/player.php');
+require_once('bottleimp/player.php');
 
-require_once('yardmasterexpress/phase.nogame.php');
-require_once('yardmasterexpress/phase.setup.php');
-require_once('yardmasterexpress/phase.game.php');
-require_once('yardmasterexpress/phase.end.php');
+require_once('bottleimp/phase.nogame.php');
+require_once('bottleimp/phase.setup.php');
+require_once('bottleimp/phase.newRound.php');
+require_once('bottleimp/phase.pass.php');
+require_once('bottleimp/phase.game.php');
+require_once('bottleimp/phase.end.php');
 
 require_once('generic/deck.base.php');
-require_once('yardmasterexpress/deck.train.php');
-require_once('yardmasterexpress/deck.caboose.php');
+require_once('bottleimp/deck.imp.php');
 
-class yardmasterexpress implements pluginInterface {
+class bottleimp implements pluginInterface {
   var $config;
   var $socket;
   var $channel;
@@ -22,28 +23,28 @@ class yardmasterexpress implements pluginInterface {
   var $phases;
   var $phase; 
   var $currentPlayer;
+  var $dealer;
 
   var $deck;
-  var $hand;
-  var $wild;
-  var $cabooseDeck;
-  var $caboose;
-  var $gameEnd;
-  var $autoScore;
+  var $bottle;
+  var $cursed;
+  var $endScore;
+  var $impHand;
 
   function init($config, $socket) {
     $this->config = $config;
     $this->socket = $socket;
-    $this->channel = '#PlayYardmasterExpress';
-    $this->game = 'Yardmaster Express';
+    $this->channel = '#PlayBottleImp';
+    $this->game = 'Bottle Imp';
     $this->started = false;
-    $this->autoScore = null;
 
     $this->phases = array();
-    $this->phases['nogame'] = new phaseYardmasterExpressNoGame($this);
-    $this->phases['setup'] = new phaseYardmasterExpressSetup($this);
-    $this->phases['game'] = new phaseYardmasterExpressGame($this);
-    $this->phases['end'] = new phaseYardmasterExpressEnd($this);
+    $this->phases['nogame'] = new phaseBottleImpNoGame($this);
+    $this->phases['setup'] = new phaseBottleImpSetup($this);
+    $this->phases['newRound'] = new phaseBottleImpNewRound($this);
+    $this->phases['pass'] = new phaseBottleImpPass($this);
+    $this->phases['game'] = new phaseBottleImpGame($this);
+    $this->phases['end'] = new phaseBottleImpEnd($this);
 
     $this->setPhase('nogame');
   }
@@ -53,7 +54,7 @@ class yardmasterexpress implements pluginInterface {
   }
 
   function onMessage($from, $channel, $msg) {
-    if($channel != $this->channel) return;
+    if(strtolower($channel) != strtolower($this->channel)) return;
     if($msg{0} != '!') return;
     $args = explode(" ", $msg);
     $cmdRaw = array_shift($args);
@@ -136,27 +137,22 @@ class yardmasterexpress implements pluginInterface {
     else return "$c points";
   }
   function cmdhelp($from, $args) {
-    $this->nUser($from, "!rules - Shows the rules for Yardmaster Express.");
-    $this->nUser($from, "!start - Start a new game of Yardmaster Express.");
+    $this->nUser($from, "!rules - Show's the rules for Bottle Imp.");
+    $this->nUser($from, "!start <points> - Start a new game of Bottle Imp, with a target score of <points>.");
     $this->nUser($from, "!join - Join a game.");
     $this->nUser($from, "!part - Part a game.");
     $this->nUser($from, "!notice - Bot will send notices for your hand.");
     $this->nUser($from, "!msg - Bot will send messages for your hand.");
-    $this->nUser($from, "!autoscore <on|off> - Will show the score between each card play.");
+    $this->nUser($from, "!score - Display score.");
+    $this->nUser($from, "!track - Display track.");
     $this->nUser($from, "!play <card> | !p <card> - Play a card.");
-    $this->nUser($from, "!wild <card> | !w <card> - Play a card face down as a wild.");
+    $this->nUser($from, "!pass <player> <card> - Pass a card to another player (to your left or right).");
+    $this->nUser($from, "!imp <player> <card> | !i <card> - Send a card to the imps hand.");
   }
   function cmdrules($from, $args) {
-    $this->nUser($from, "Yardmaster Express is an IRC implementation of the game Yardmaster Express!");
-    $this->nUser($from, "The rules can be found online at http://boardgamegeek.com/filepage/103647/yardmaster-express-prototype-rules-english");
-  }
-  function displayHand($drawn = '') {
-    $display = array();
-    foreach($this->hand as $letter => $card) {
-      if($letter == $drawn) $display[] = "$letter*. ".$card->display();
-      else $display[] = "$letter. ".$card->display();
-    }
-    return implode(', ', $display);
+    $this->nUser($from, "Bottle Imp is an IRC implementation of the game The Bottle Imp!");
+    $this->nUser($from, "The rules can be found online at https://boardgamegeek.com/filepage/45492/english-rules-flaschenteufel-bambus-spieleverlag");
+    $this->nUser($from, "Or ask someone in #boardgames for a learning game!");
   }
   function cmdscores($from, $args) {
     if(!($this->started)) return;
@@ -170,73 +166,74 @@ class yardmasterexpress implements pluginInterface {
     if(!($this->started)) return;
     $this->score();
   }
-  function score() {
-    $runs = array();
+  function cmdbottle($from, $args) {
+    if(!($this->started)) return;
+    if($this->cursed == null) $this->mChan("The bottle is selling for {$this->bottle->display} and is held by no one.");
+    else $this->mChan("The bottle is selling for {$this->bottle->display} and is held by {$this->cursed->nick}.");
+  }
+  function score($board = true) {
     $scores = array();
-    foreach($this->players as $nick => $player) {
-      $last = null;
-      $run = 0;
-      $bestRun = 0;
-      $score = 0;
-      foreach($player->train as $car) {
-        $score += $car->leftNumber;
-        $score += $car->rightNumber;
-        if($car->leftColor == $last) $run++;
-        else {
-          if($run > $bestRun && $last != 'Wild') $bestRun = $run;
-          $last = $car->leftColor;
-          $run = 1;
-        }
-        if($car->rightColor == $last) $run++;
-        else {
-          if($run > $bestRun && $last != 'Wild') $bestRun = $run;
-          $last = $car->rightColor;
-          $run = 1;
-        }
-      }
-      if($run > $bestRun && $last != 'Wild') $bestRun = $run;
-      $scores[$nick] = $score;
-      $runs[$nick] = $bestRun;
+    if($board) {
+      if($this->cursed == null) $this->mChan("The bottle is selling for {$this->bottle->display} and is held by no one.");
+      else $this->mChan("The bottle is selling for {$this->bottle->display} and is held by {$this->cursed->nick}.");
     }
-    $longestRun = -1;
-    $longestRunners = array();
-    foreach($runs as $nick => $bestRun) {
-      if($bestRun > $longestRun) {
-        $longestRun = $bestRun;
-        $longestRunners = array($nick);
-      }
-      else if($bestRun == $longestRun) {
-        $longestRunners[] = $nick;
-      }
-    }
-    $this->mChan("The caboose is {$this->caboose->title} ({$this->caboose->points} points): {$this->caboose->text}");
-    foreach($longestRunners as $nick) $scores[$nick] += $longestRun;
-    $cabooses = $this->caboose->win();
-    foreach($cabooses as $nick) $scores[$nick] += $this->caboose->points;
     foreach($this->players as $nick => $player) {
-      $longest = in_array($nick, $longestRunners) ? '^' : '';
-      $caboose = in_array($nick, $cabooses) ? '*' : '';
-      $score = $scores[$nick];
-      $this->mChan("$nick ({$score}{$longest}{$caboose}) ".$player->displayTrain().".");
+      $scores[$nick] = $player->score;
+    }
+    arsort($scores);
+    foreach($scores as $nick => $score) {
+      $this->mChan("$nick has ".$score." / ".$this->endScore.".");
     }
   }
-  function cmdautoscore($from, $args) {
-    if(!(isset($args[0]))) {
-      $this->mChan("Auto scoring is currently ".($this->autoScore ? 'on' : 'off').".");
-      return;
+  function cmdtrack($from, $args) {
+    $cards = array(
+      1 => 'Y',
+      2 => 'Y',
+      3 => 'Y',
+      4 => 'B',
+      5 => 'Y',
+      6 => 'B',
+      7 => 'Y',
+      8 => 'B',
+      9 => 'Y',
+      10 => 'B',
+      11 => 'O',
+      12 => 'Y',
+      13 => 'B',
+      14 => 'O',
+      15 => 'Y',
+      16 => 'O',
+      17 => 'B',
+      18 => 'Y',
+      19 => 'W',
+      20 => 'B',
+      21 => 'O',
+      22 => 'Y',
+      23 => 'O',
+      24 => 'B',
+      25 => 'Y',
+      26 => 'O',
+      27 => 'B',
+      28 => 'Y',
+      29 => 'O',
+      30 => 'B',
+      31 => 'O',
+      32 => 'B',
+      33 => 'O',
+      34 => 'B',
+      35 => 'O',
+      36 => 'O',
+      37 => 'O'
+    );
+    $display = array();
+    foreach($cards as $val => $col) {
+      $colNum = '00';
+      if($col == 'O') $colNum = '07';
+      else if($col == 'B') $colNum = '11';
+      else if($col == 'Y') $colNum = '08';
+      $display[] = chr(3).$colNum.$val.$col;
     }
-    $cmd = strtolower($args[0]);
-    if($cmd == 'off') {
-      $this->autoScore = false;
-      $this->mChan("Auto scoring has been turned off.");
-    }
-    else if($cmd == 'on') {
-      $this->autoScore = true;
-      $this->mChan("Auto scoring has been turned on.");
-    }
-    else {
-      $this->mChan("Auto scoring is currently ".($this->autoScore ? 'on' : 'off').". It can only be set to on or off, please specify a valid option.");
-    }
+    $this->mChan(chr(3).'00,01Track: '.implode(chr(3).'00,', $display));
   }
   function cmdnotice($from, $args) {
     $player = $this->findPlayer($from);

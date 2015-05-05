@@ -1,16 +1,16 @@
 <?php
-require_once('cloud9\player.php');
+require_once('cloud9/player.php');
 
-require_once('cloud9\phase.nogame.php');
-require_once('cloud9\phase.setup.php');
-require_once('cloud9\phase.startcloud.php');
-require_once('cloud9\phase.cloud.php');
-require_once('cloud9\phase.endcloud.php');
-require_once('cloud9\phase.endclimb.php');
-require_once('cloud9\phase.solo.php');
+require_once('cloud9/phase.nogame.php');
+require_once('cloud9/phase.setup.php');
+require_once('cloud9/phase.startcloud.php');
+require_once('cloud9/phase.cloud.php');
+require_once('cloud9/phase.endcloud.php');
+require_once('cloud9/phase.endclimb.php');
+require_once('cloud9/phase.solo.php');
 
-require_once('generic\deck.base.php');
-require_once('cloud9\deck.color.php');
+require_once('generic/deck.base.php');
+require_once('cloud9/deck.color.php');
 
 class cloud9 implements pluginInterface {
   var $config;
