@@ -522,233 +522,234 @@ function cmdPass($nick) {
 		return;
 	}
 //		$this->mChan("before unset players: ".implode(", ", array_keys($this->roundPlayers)).".");
-	unset($this->roundPlayers[$nick]);
 //		$this->mChan("after unset players: ".implode(", ", array_keys($this->roundPlayers)).".");
 
 
 
-	if(count(array_keys($this->roundPlayers)) == 1) {
-		// all but 1 player has passed. Dungeon time!
-		$lastPlayer = array_keys($this->roundPlayers);
-		$hero = array_shift($lastPlayer);
-		$this->mChan("$nick has passed. Now $hero goes into the dungeon!");
+  if(count(array_keys($this->roundPlayers)) == 2) {
+    unset($this->roundPlayers[$nick]);
+    // all but 1 player has passed. Dungeon time!
+    $lastPlayer = array_keys($this->roundPlayers);
+    $hero = array_shift($lastPlayer);
+    $this->mChan("$nick has passed. Now $hero goes into the dungeon!");
 
-		$this->currentPlayer = $hero;
+    $this->currentPlayer = $hero;
 
-		if($this->items["v"] !== 0 && count($this->dungeonDeck) > 0) {
-			// ask for Vorpal input, if need be.
+    if($this->items["v"] !== 0 && count($this->dungeonDeck) > 0) {
+      // ask for Vorpal input, if need be.
 
-			$this->phase = 'vorpal';
-			$this->mChan("$hero: You have the Vorpal Sword. Please choose a Monster type that will deal you no damage:");
-			$this->mChan("1-Goblin, 2-Skeleton, 3-Orc, 4-Vampire, 5-Golem, 6-Lich, 7-Demon, 9-Dragon (e.g. !vorpal 5)");
+      $this->phase = 'vorpal';
+      $this->mChan("$hero: You have the Vorpal Sword. Please choose a Monster type that will deal you no damage:");
+      $this->mChan("1-Goblin, 2-Skeleton, 3-Orc, 4-Vampire, 5-Golem, 6-Lich, 7-Demon, 9-Dragon (e.g. !vorpal 5)");
 
-		} else {
-			// actually crawl the dungeon
+    } else {
+      // actually crawl the dungeon
 
-			$this->enterDungeon($hero, false);
-		}
-	}
-	else {
-		$this->mChan("$nick has passed. Remaining players: ".implode(", ", array_keys($this->roundPlayers)).".");
-		$this->nextPlayer();
-		$this->mChan($this->currentPlayer.", you're up. Please draw a card, or pass.");
-		$this->phase = 'draw';
-	}
+      $this->enterDungeon($hero, false);
+    }
+  }
+  else {
+    $this->mChan("$nick has passed. Remaining players: ".implode(", ", array_keys($this->roundPlayers)).".");
+    $this->nextPlayer();
+    unset($this->roundPlayers[$nick]);
+    $this->mChan($this->currentPlayer.", you're up. Please draw a card, or pass.");
+    $this->phase = 'draw';
+  }
 }
 
 function enterDungeon($nick, $vorpal) {
-	$leftoverMonsters = array();
-	$this->dungeonDeck = array_reverse($this->dungeonDeck);
+  $leftoverMonsters = array();
+  $this->dungeonDeck = array_reverse($this->dungeonDeck);
 
-	// determine player HP.
+  // determine player HP.
 
-	$yourHP = 3 + ($this->items["k"] * 3) + ($this->items["c"] * 5);
-	$this->mChan("$nick: You start with $yourHP hit points.");
+  $yourHP = 3 + ($this->items["k"] * 3) + ($this->items["c"] * 5);
+  $this->mChan("$nick: You start with $yourHP hit points.");
 
-	// assess each monster.
+  // assess each monster.
 
-	for( $i=0; $i<count($this->dungeonDeck); $i++) {
+  for( $i=0; $i<count($this->dungeonDeck); $i++) {
 
-		$hpBefore = $yourHP;
+    $hpBefore = $yourHP;
 
-		$thisMonster = $this->dungeonDeck[$i];
-		$monsterText = $this->monsters[$thisMonster];
+    $thisMonster = $this->dungeonDeck[$i];
+    $monsterText = $this->monsters[$thisMonster];
 
-		$this->currentPlayer = $nick;
+    $this->currentPlayer = $nick;
 
-		if( $hpBefore > 0 ) {
+    if( $hpBefore > 0 ) {
 
-			if( $vorpal && $vorpal == $thisMonster ) {
-				$this->mChan("$nick: You ignore the $monsterText with your Vorpal Sword.");
-			} else {
-				// 9
-				$yourHP -= ($thisMonster==9) * !$this->items["d"] * $thisMonster;
+      if( $vorpal && $vorpal == $thisMonster ) {
+        $this->mChan("$nick: You ignore the $monsterText with your Vorpal Sword.");
+      } else {
+        // 9
+        $yourHP -= ($thisMonster==9) * !$this->items["d"] * $thisMonster;
 
-				// 7 always hits
-				$yourHP -= ($thisMonster==7) * $thisMonster;
+        // 7 always hits
+        $yourHP -= ($thisMonster==7) * $thisMonster;
 
-				// 6, 4, 2
-				$yourHP -= ($thisMonster%2==0) * !$this->items["h"] * $thisMonster;
+        // 6, 4, 2
+        $yourHP -= ($thisMonster%2==0) * !$this->items["h"] * $thisMonster;
 
-				// 5 always hits
-				$yourHP -= ($thisMonster==5) * $thisMonster;
+        // 5 always hits
+        $yourHP -= ($thisMonster==5) * $thisMonster;
 
-				// 3, 2, 1
-				$yourHP -= ($thisMonster<4) * !$this->items["t"] * $thisMonster;
-			}
-			if( $hpBefore == $yourHP ) {
-				$this->mChan("$nick: You take no damage from the $monsterText.");
-			} else {
-				if( $yourHP <= 0) {
-					$this->mChan("$nick: The $monsterText damages you for $thisMonster, killing you. You have died.");
-				} else {
-					$this->mChan("$nick: The $monsterText damages you for $thisMonster. You have $yourHP hit points left.");
-				}
-			}
-		} else {
-			// you're already dead
-			$leftoverMonsters[] = $monsterText;
-		}
-	}
+        // 3, 2, 1
+        $yourHP -= ($thisMonster<4) * !$this->items["t"] * $thisMonster;
+      }
+      if( $hpBefore == $yourHP ) {
+        $this->mChan("$nick: You take no damage from the $monsterText.");
+      } else {
+        if( $yourHP <= 0) {
+          $this->mChan("$nick: The $monsterText damages you for $thisMonster, killing you. You have died.");
+        } else {
+          $this->mChan("$nick: The $monsterText damages you for $thisMonster. You have $yourHP hit points left.");
+        }
+      }
+    } else {
+      // you're already dead
+      $leftoverMonsters[] = $monsterText;
+    }
+  }
 
-	if( count( $leftoverMonsters) > 0 ) {
-		$this->mChan("$nick: The dungeon also contained: " . implode( ", ", $leftoverMonsters));
-	}
+  if( count( $leftoverMonsters) > 0 ) {
+    $this->mChan("$nick: The dungeon also contained: " . implode( ", ", $leftoverMonsters));
+  }
 
-	$score = $this->allPlayers[$nick];
+  $score = $this->allPlayers[$nick];
 
 
-	if( $yourHP > 0) {
-		$this->mChan("$nick: You survived the dungeon!");
+  if( $yourHP > 0) {
+    $this->mChan("$nick: You survived the dungeon!");
 
-		$this->allPlayers[$nick] = sign($score) * (10 + abs($score));
+    $this->allPlayers[$nick] = sign($score) * (10 + abs($score));
 
-	} else {
+  } else {
 
-		if( $score < 0) {
-			// remove dead player, if need be.
-			$this->mChan("$nick has died twice and is removed from the game.");
+    if( $score < 0) {
+      // remove dead player, if need be.
+      $this->mChan("$nick has died twice and is removed from the game.");
 
-			unset( $this->players[$nick]);
-			unset( $this->roundPlayers[$nick]);
-			$this->nextPlayer();
+      unset( $this->players[$nick]);
+      unset( $this->roundPlayers[$nick]);
+      $this->nextPlayer();
 
-		} else {
-			$this->allPlayers[$nick] = -$score;
-		}
-		$this->allPlayers[$nick] -= 1;
-	}
+    } else {
+      $this->allPlayers[$nick] = -$score;
+    }
+    $this->allPlayers[$nick] -= 1;
+  }
 
-	// end the game, if need be.
+  // end the game, if need be.
 
-	if( abs( $this->allPlayers[$nick] ) >= 20 ) {
-		//	$this->mChan("$nick has survived the dungeon twice and wins the game.");
+  if( abs( $this->allPlayers[$nick] ) >= 20 ) {
+    //	$this->mChan("$nick has survived the dungeon twice and wins the game.");
 
-		$this->endGame();
-		return;
-	}
+    $this->endGame();
+    return;
+  }
 
-	if( count(array_keys($this->players)) == 1 ) {
-		$players = array_keys($this->players);
-		$this->mChan("Only {$player[0]} is left standing, and wins the game.");
+  if( count(array_keys($this->players)) == 1 ) {
+    $players = array_keys($this->players);
+    $this->mChan("Only {$player[0]} is left standing, and wins the game.");
 
-		$this->endGame();
-		return;
-	}
+    $this->endGame();
+    return;
+  }
 
-	$this->scores(false);
+  $this->scores(false);
 
-	sleep( 1 );
+  sleep( 1 );
 
-	// start a new round
-	$this->newRound($this->currentPlayer);
+  // start a new round
+  $this->newRound($this->currentPlayer);
 }
 
 function scores($final) {
-	foreach( $this->allPlayers as $nick => $score ) {
-//		$this->mChan( "$nick $score");
+  foreach( $this->allPlayers as $nick => $score ) {
+    //		$this->mChan( "$nick $score");
 
-		switch( $score ) {
-			case 10:
-				$this->mChan("$nick survived once.");
-				break;
-			case 20:
-				$this->mChan("$nick survived twice, winning the game.");
-				break;
-			case -21:
-				$this->mChan("$nick died once, but survived twice, winning the game.");
-				break;
-			case -1:
-				$this->mChan("$nick died once.");
-				break;
-			case -2:
-				$this->mChan("$nick died twice.");
-				break;
-			case -11:
-				$this->mChan("$nick survived once, and died once.");
-				break;
-			case -12:
-				$this->mChan("$nick survived once, and died twice.");
-				break;
+    switch( $score ) {
+    case 10:
+      $this->mChan("$nick survived once.");
+      break;
+    case 20:
+      $this->mChan("$nick survived twice, winning the game.");
+      break;
+    case -21:
+      $this->mChan("$nick died once, but survived twice, winning the game.");
+      break;
+    case -1:
+      $this->mChan("$nick died once.");
+      break;
+    case -2:
+      $this->mChan("$nick died twice.");
+      break;
+    case -11:
+      $this->mChan("$nick survived once, and died once.");
+      break;
+    case -12:
+      $this->mChan("$nick survived once, and died twice.");
+      break;
 
-			default:
-				$this->mChan("$nick " . ($final ? "never": "hasn't") . " entered the dungeon.");
-		}
+    default:
+      $this->mChan("$nick " . ($final ? "never": "hasn't") . " entered the dungeon.");
+    }
 
-	}
-	sleep(1);
+  }
+  sleep(1);
 }
 
 function endGame() {
-	$this->scores(true);
-	$this->resetVars();
-	$this->mChan("A new game can now begin. Please !join if you would like to play again.");
+  $this->scores(true);
+  $this->resetVars();
+  $this->mChan("A new game can now begin. Please !join if you would like to play again.");
 }
 
 function cmdVorpal($nick, $tmp) {
-	if(!($this->started)) {
-		//$this->mChan("$nick: No game has started yet.");
-		return;
-	}
+  if(!($this->started)) {
+    //$this->mChan("$nick: No game has started yet.");
+    return;
+  }
 
-	if(!in_array($nick, array_keys($this->allPlayers))) {
-		return;
-	}
+  if(!in_array($nick, array_keys($this->allPlayers))) {
+    return;
+  }
 
-	if($this->phase != 'vorpal') {
-		$this->mChan("$nick: Now is not the time for the Vorpal Sword.");
-		return;
-	}
+  if($this->phase != 'vorpal') {
+    $this->mChan("$nick: Now is not the time for the Vorpal Sword.");
+    return;
+  }
 
-	if($nick != $this->currentPlayer) {
-		$this->mChan("$nick: {$this->currentPlayer} is using the Vorpal Sword, not you.");
-		return;
-	}
+  if($nick != $this->currentPlayer) {
+    $this->mChan("$nick: {$this->currentPlayer} is using the Vorpal Sword, not you.");
+    return;
+  }
 
-	$m = $tmp[0]+0;
+  $m = $tmp[0]+0;
 
-	if( $m > 9 || $m <= 0 || $m == 8) {
-		$this->mChan("$nick: That is not a valid monster. It must be 1, 2, 3, 4, 5, 6, 7, or 9.");
-		return;
-	}
+  if( $m > 9 || $m <= 0 || $m == 8) {
+    $this->mChan("$nick: That is not a valid monster. It must be 1, 2, 3, 4, 5, 6, 7, or 9.");
+    return;
+  }
 
-	$this->enterDungeon($nick, $m);
+  $this->enterDungeon($nick, $m);
 
 }
 }
 /*
 function sendNotice($socket, $channel, $msg) {
-	if(strlen($msg) > 2) { //Avoid sending empty lines to server, since all data should contain a line break, 2 chars is minimum
-		$msg = prettify($msg);
-		sendData($socket, "NOTICE {$channel} :{$msg}");
-	}
+  if(strlen($msg) > 2) { //Avoid sending empty lines to server, since all data should contain a line break, 2 chars is minimum
+    $msg = prettify($msg);
+    sendData($socket, "NOTICE {$channel} :{$msg}");
+  }
 }
-*/
+ */
 function sign( $x ) {
-	// dumb, yes. But it gets the job done.
-	if ( $x >= 0 ) {
-		return 1;
-	} else {
-		return -1;
-	}
+  // dumb, yes. But it gets the job done.
+  if ( $x >= 0 ) {
+    return 1;
+  } else {
+    return -1;
+  }
 }

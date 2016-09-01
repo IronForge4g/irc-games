@@ -152,7 +152,7 @@ class phaseDeadDropGame {
     if($this->r->chosenCard == $sum) {
       $this->r->mChan($from." has successfully grabbed the stash with {$player->hand[$card1]}+{$player->hand[$card2]}.");
       $player->score++;
-      if($player->score >= 3) {
+      if($player->score >= 1) {
         $this->r->setPhase('end');
         return;
       }
@@ -175,7 +175,7 @@ class phaseDeadDropGame {
         $winner = $remaining[0];
         $this->r->mChan("{$winner->nick} is the only remaining spy. They grab the drop.");
         $winner->score++;
-        if($winner->score >= 3) {
+        if($winner->score >= 1) {
           $this->r->setPhase('end');
           return;
         }

@@ -26,6 +26,7 @@ class deadDropPlayer {
     $display = array();
     $displayLetter = 0;
     $letterHand = array();
+    shuffle($this->hand);
     foreach($this->hand as $card) {
       $letter = $letters[$displayLetter++];
       $letterHand[$letter] = $card;

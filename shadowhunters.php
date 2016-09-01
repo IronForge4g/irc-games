@@ -107,7 +107,7 @@ class shadowhunters implements pluginInterface {
   function onData($data) {
     $tmp = explode(" ", trim($data));
     $from = getNick($tmp[0]);
-    if(!(isset($tmp[1]))) continue;
+    if(!(isset($tmp[1]))) return;
     if($tmp[1] == 'NICK') $this->onNick($from, str_replace(":", "", $tmp[2]));
     else if($tmp[1] == 'PART' && trim(strtolower($this->channel)) == trim(strtolower($tmp[2]))) $this->onQuit($from);
     else if($tmp[1] == 'QUIT') $this->onQuit($from);
